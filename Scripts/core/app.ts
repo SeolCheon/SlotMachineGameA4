@@ -192,12 +192,12 @@
             if(creditLabel.text == "0")
             {
                 if(confirm(`You ran out of Money!\n Do you want to play again?`))
-                Start();
+                Main();                            //to reset everything (if you put Start, it occurs working error)
             }
             else if(Number(betLabel.text) > Number(creditLabel.text))
             {
                 alert(`You don't have enough Money to place that bet.`);
-                Start();
+                Main();                           //to reset everything (if you put Start, it occurs error)
             }
             else if(Number(betLabel.text) <= Number(creditLabel.text))
             {
@@ -208,7 +208,7 @@
             middleReel.image = assets.getResult(reels[1]) as HTMLImageElement;
             rightReel.image = assets.getResult(reels[2]) as HTMLImageElement;  
 
-            
+
             let blankcount = 0;
             let grapecount =0;
             let bananacount =0;
