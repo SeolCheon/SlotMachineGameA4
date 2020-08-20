@@ -186,6 +186,51 @@
         stage.addChild(betLine);
     }
 
+    function interfaceLogic():void
+    {
+        spinButton.on("click", ()=>{            
+            if(creditLabel.text == "0")
+            {
+                if(confirm(`You ran out of Money!\n Do you want to play again?`))
+                Start();
+            }
+            else if(Number(betLabel.text) > Number(creditLabel.text))
+            {
+                alert(`You don't have enough Money to place that bet.`);
+                Start();
+            }
+            else if(Number(betLabel.text) <= Number(creditLabel.text))
+            {
+            // reel test
+            let reels = Reels();
+            // example of how to replace the images in the reels
+            leftReel.image = assets.getResult(reels[0]) as HTMLImageElement;
+            middleReel.image = assets.getResult(reels[1]) as HTMLImageElement;
+            rightReel.image = assets.getResult(reels[2]) as HTMLImageElement;  
+                    
+            }})  
+
+        bet1Button.on("click", ()=>{
+            console.log("bet1Button Button Clicked");
+            betLabel.setText((Number(betLabel.text)+1).toString());
+        });
+
+        bet10Button.on("click", ()=>{
+            console.log("bet10Button Button Clicked");
+            betLabel.setText((Number(betLabel.text)+10).toString());
+        });
+
+        bet100Button.on("click", ()=>{
+            console.log("bet100Button Button Clicked");
+            betLabel.setText((Number(betLabel.text)+100).toString());
+        });
+
+        betMaxButton.on("click", ()=>{
+            console.log("betMaxButton Button Clicked");
+            betLabel.setText(Number(creditLabel.text).toString());
+        });
+    }
+
     
 
    
@@ -195,6 +240,7 @@
     function Main():void
     {
         buildInterface();
+        interfaceLogic();
 
         
     }
