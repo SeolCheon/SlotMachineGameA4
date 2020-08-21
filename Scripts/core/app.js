@@ -1,5 +1,10 @@
 /*
-
+File name : app.js
+Author's name : Seol Cheon
+Student number : 301113120
+web site name : Slot Machine App
+File description : javascript file to make slot machine work that is linked to html file
+                    build slot machine interface and logic
 */
 (function () {
     // Function scoped Variables

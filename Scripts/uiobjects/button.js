@@ -1,3 +1,11 @@
+/*
+File name : button.js
+Author's name : Seol Cheon
+Student number : 301113120
+web site name : Slot Machine App
+File description : javascript file to make slot machine work that is linked to html file
+                   functions for making buttons
+*/
 var UIObjects;
 (function (UIObjects) {
     class Button extends Core.GameObject {

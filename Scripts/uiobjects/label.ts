@@ -1,3 +1,11 @@
+/*
+File name : label.js
+Author's name : Seol Cheon
+Student number : 301113120
+web site name : Slot Machine App
+File description : javascript file to make slot machine work that is linked to html file
+                   functions necessary for making labels
+*/
 module UIObjects
 {
     export class Label extends createjs.Text

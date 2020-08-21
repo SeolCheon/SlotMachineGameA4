@@ -1,6 +1,3 @@
-/*
-
-*/
 (function(){
     // Function scoped Variables
     let stage: createjs.Stage;
