@@ -209,7 +209,35 @@
             rightReel.image = assets.getResult(reels[2]) as HTMLImageElement;  
 
 
-            let blankcount = 0;
+            determinWinnings();      
+                    
+            }})  
+            
+
+        bet1Button.on("click", ()=>{
+            console.log("bet1Button Button Clicked");
+            betLabel.setText((Number(betLabel.text)+1).toString());
+        });
+
+        bet10Button.on("click", ()=>{
+            console.log("bet10Button Button Clicked");
+            betLabel.setText((Number(betLabel.text)+10).toString());
+        });
+
+        bet100Button.on("click", ()=>{
+            console.log("bet100Button Button Clicked");
+            betLabel.setText((Number(betLabel.text)+100).toString());
+        });
+
+        betMaxButton.on("click", ()=>{
+            console.log("betMaxButton Button Clicked");
+            betLabel.setText(Number(creditLabel.text).toString());
+        });
+    }
+    function determinWinnings()
+    {
+        let reels = Reels();
+        let blankcount = 0;
             let grapecount =0;
             let bananacount =0;
             let orangecount =0;
@@ -333,29 +361,7 @@
                             creditLabel.setText((Number(creditLabel.text)-Number(betLabel.text)).toString());
                             
                     }  
-                 
-                    
-            }})  
-
-        bet1Button.on("click", ()=>{
-            console.log("bet1Button Button Clicked");
-            betLabel.setText((Number(betLabel.text)+1).toString());
-        });
-
-        bet10Button.on("click", ()=>{
-            console.log("bet10Button Button Clicked");
-            betLabel.setText((Number(betLabel.text)+10).toString());
-        });
-
-        bet100Button.on("click", ()=>{
-            console.log("bet100Button Button Clicked");
-            betLabel.setText((Number(betLabel.text)+100).toString());
-        });
-
-        betMaxButton.on("click", ()=>{
-            console.log("betMaxButton Button Clicked");
-            betLabel.setText(Number(creditLabel.text).toString());
-        });
+           
     }
 
     
