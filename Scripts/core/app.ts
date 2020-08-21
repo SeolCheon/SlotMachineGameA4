@@ -278,7 +278,7 @@
             }
              
         //this consolel message is for checking which shapes appears how many times on betline    
-        console.log(`the number of {blank, grape, banana, orange, cherry, bar, bell, seven\n ${blankcount},${grapecount},${bananacount},${orangecount},${cherrycount},${barcount},${bellcount},${sevencount}`)
+        console.log(`blank, grape, banana, orange, cherry, bar, bell, seven\n ${blankcount},${grapecount},${bananacount},${orangecount},${cherrycount},${barcount},${bellcount},${sevencount}`)
             
             //determining winning points and adding winning points to credit   
             if(blankcount==0)                                                                                           //if there's no blank-(win)    

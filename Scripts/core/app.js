@@ -1,11 +1,3 @@
-/*
-File name : app.js
-Author's name : Seol Cheon
-Student number : 301113120
-web site name : Slot Machine App
-File description : javascript file to make slot machine work that is linked to html file
-                    build slot machine interface and logic
-*/
 (function () {
     // Function scoped Variables
     let stage;
@@ -240,7 +232,7 @@ File description : javascript file to make slot machine work that is linked to h
                 sevencount++;
         }
         //this consolel message is for checking which shapes appears how many times on betline    
-        console.log(`the number of {blank, grape, banana, orange, cherry, bar, bell, seven\n ${blankcount},${grapecount},${bananacount},${orangecount},${cherrycount},${barcount},${bellcount},${sevencount}`);
+        console.log(`blank, grape, banana, orange, cherry, bar, bell, seven\n ${blankcount},${grapecount},${bananacount},${orangecount},${cherrycount},${barcount},${bellcount},${sevencount}`);
         //determining winning points and adding winning points to credit   
         if (blankcount == 0) //if there's no blank-(win)    
          {
