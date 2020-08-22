@@ -67,16 +67,6 @@
         jackpot = 5000;
         playerBet = 0;
     }
-    /*Check to see if the player won the jackpot */
-    function checkJackPot() {
-        let jackPotTry = Math.floor(Math.random() * 51 + 1);
-        let jackPotWin = Math.floor(Math.random() * 51 + 1);
-        if (jackPotTry == jackPotWin) {
-            alert("You won the $" + jackpot + "Jackpot!!");
-            playerMoney += jackpot;
-            jackpot = 1000;
-        }
-    }
     // This function triggers first and "Preloads" all the assets
     function Preload() {
         assets = new createjs.LoadQueue();
@@ -255,7 +245,6 @@
         playerMoney += winnings;
         console.log(`You won: ${winnings} and Your left credits: ${creditLabel.text}`);
         resetFruitTally();
-        checkJackPot();
     }
     function showLossMessage() {
         playerMoney -= playerBet;
@@ -305,6 +294,7 @@
                 winnings = playerBet * 100;
                 winningsLabel.setText((Number(betLabel.text) * 100).toString()); //winning point is betamount *100
                 creditLabel.setText((Number(creditLabel.text) + Number(winningsLabel.text) + Number(jackPotLabel.text).toString()).toString()); //add the winning point to credit
+                alert(`JackPot!\nYou got $${jackPotLabel.text}Jackpot and $${winningsLabel.text} winnings`);
                 jackPotLabel.setText("1000");
             }
             else if (grapes == 2) {
