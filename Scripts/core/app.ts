@@ -128,6 +128,7 @@
         for (var spin = 0; spin < 3; spin++) {
             outCome[spin] = Math.floor((Math.random() * 65) + 1);
             switch (outCome[spin]) {
+                
                 case checkRange(outCome[spin], 1, 27):  // 41.5% probability
                     betLine[spin] = "blank";
                     blanks++;
@@ -161,40 +162,6 @@
                     sevens++;
                     break;
 
-                    /*
-                    case checkRange(outCome[spin], 1, 2): //1, 27) 41.5% probability
-                    betLine[spin] = "blank";
-                    blanks++;
-                    break;
-                case checkRange(outCome[spin], 3, 4): //28, 37) 15.4% probability
-                    betLine[spin] = "grapes";
-                    grapes++;
-                    break;
-                case checkRange(outCome[spin], 5, 6): //38, 46) 13.8% probability
-                    betLine[spin] = "banana";
-                    bananas++;
-                    break;
-                case checkRange(outCome[spin], 7, 8): //47, 54) 12.3% probability
-                    betLine[spin] = "orange";
-                    oranges++;
-                    break;
-                case checkRange(outCome[spin], 9, 10): //55, 59) 7.7% probability
-                    betLine[spin] = "cherry";
-                    cherries++;
-                    break;
-                case checkRange(outCome[spin], 11, 12): //60, 62) 4.6% probability
-                    betLine[spin] = "bar";
-                    bars++;
-                    break;
-                case checkRange(outCome[spin], 13, 14): //63, 64) 3.1% probability
-                    betLine[spin] = "bell";
-                    bells++;
-                    break;
-                case checkRange(outCome[spin], 15, 65): //65, 65) 1.5% probability
-                    betLine[spin] = "seven";
-                    sevens++;
-                    break;
-                    */
      
             }
         }
@@ -263,35 +230,38 @@
         spinButton.on("click", ()=>{     
             playerBet=Number(betLabel.text);
                   
-            if (playerMoney == 0)
+            if (playerMoney == 0)                                                   //if credits =0
             {
-                if (confirm("You ran out of Money! \nDo you want to play again?")) 
+                if (confirm("You ran out of Money! \nDo you want to play again?"))  //confirm message
                 {
-                    resetAll();
-                    Main();
+                    resetAll();                                                     //reset fruittally value
+                    Main();                                                         //reset page
                 }
             }
-            else if (playerBet > playerMoney) 
+            else if (playerBet > playerMoney)                                       //if credit < bet amount
             {
-                alert("You don't have enough Money to place that bet.");
-                resetAll();
-                Main();
+                alert("You don't have enough Money to place that bet.");            //alert message
+                resetAll();                                                         //reset fruittally value
+                Main();                                                             //reset page
             }
-            else if (playerBet < 0) 
+            else if (playerBet < 0)                                                 //if bet amount <0
             {
-                alert("All bets must be a positive $ amount.");
+                alert("All bets must be a positive $ amount.");                     //alert message
             }
-            else if (playerBet ==0)
+            else if (playerBet ==0)                                                 //if bet money is 0
             {
-                alert("You didn't bet any money! Put your money")
+                alert("You didn't bet any money! Put your money")                   //alert message
             }
-            else if (playerBet <= playerMoney) {
+            else if (playerBet <= playerMoney) {                                    //if credit > bet amount(when it is possible to game)
+                
                 // reel test
                 let reels = Reels();
+                
                 // example of how to replace the images in the reels
                 leftReel.image = assets.getResult(reels[0]) as HTMLImageElement;
                 middleReel.image = assets.getResult(reels[1]) as HTMLImageElement;
                 rightReel.image = assets.getResult(reels[2]) as HTMLImageElement;  
+                //implement determinewinning
                 determineWinnings();
             }
             else {
@@ -320,14 +290,17 @@
             betLabel.setText(Number(creditLabel.text).toString());                  //change the bet amount by adding Max credit
         });
 
-        betResetButton.on("click", ()=>{
-            console.log("betResetButton Button Clicked");
+        betResetButton.on("click", ()=>{                                            //when you click betReset button
+            console.log("betResetButton Button Clicked");                           //show this on consle
             let betReset =Number(betLabel.text);
             betReset = 0;
-            betLabel.setText(betReset.toString());
+            betLabel.setText(betReset.toString());                                  //change the bet amout to 0
         })
     }
 
+    /**
+     * This function is for showing winning message in console.
+     */
     function showWinMessage()
     {
         playerMoney += winnings;
@@ -339,6 +312,9 @@
         
         
     }
+     /**
+     * This function is for showing losing message in console.
+     */
     function showLossMessage()
     {
         playerMoney -= playerBet;
@@ -468,7 +444,7 @@
             showWinMessage();
            
         }
-        else
+        else                                                                                            //when you get blank more than one(you lost)
         {
             creditLabel.setText((Number(creditLabel.text)-Number(betLabel.text)).toString());           //your credit will deducted by bet amount
             showLossMessage();
