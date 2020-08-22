@@ -298,6 +298,13 @@
             console.log("betMaxButton Button Clicked");                             //show this on console                 
             betLabel.setText(Number(creditLabel.text).toString());                  //change the bet amount by adding Max credit
         });
+
+        betResetButton.on("click", ()=>{
+            console.log("betResetButton Button Clicked");
+            let betReset =Number(betLabel.text);
+            betReset = 0;
+            betLabel.setText(betReset.toString());
+        })
     }
 
     function showWinMessage()
