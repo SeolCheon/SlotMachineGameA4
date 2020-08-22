@@ -8,6 +8,7 @@
     let bet10Button;
     let bet100Button;
     let betMaxButton;
+    let betResetButton;
     let jackPotLabel;
     let creditLabel;
     let winningsLabel;
@@ -25,6 +26,7 @@
     let bells = 0;
     let sevens = 0;
     let blanks = 0;
+    //player winning status variable
     let winnings = 0;
     let playerBet = 0;
     let playerMoney = 1000;
@@ -45,9 +47,10 @@
         { id: "orange", src: "./Assets/images/orange.gif" },
         { id: "seven", src: "./Assets/images/seven.gif" },
         { id: "spinButton", src: "./Assets/images/spinButton.png" },
+        { id: "betResetButton", src: "./Assets/images/betResetButton.png" },
     ];
+    /* Utility function to reset all fruit tallies */
     function resetFruitTally() {
-        // symbol tallies
         grapes = 0;
         bananas = 0;
         oranges = 0;
@@ -166,6 +169,8 @@
         stage.addChild(bet100Button);
         betMaxButton = new UIObjects.Button("betMaxButton", Config.Screen.CENTER_X + 67, Config.Screen.CENTER_Y + 176, true);
         stage.addChild(betMaxButton);
+        betResetButton = new UIObjects.Button("betResetButton", Config.Screen.CENTER_X + 230, Config.Screen.CENTER_Y + 176, true);
+        stage.addChild(betResetButton);
         // Labels
         jackPotLabel = new UIObjects.Label("5000", "20px", "Consolas", "#FF0000", Config.Screen.CENTER_X, Config.Screen.CENTER_Y - 175, true);
         stage.addChild(jackPotLabel);
@@ -242,6 +247,9 @@
     }
     function showWinMessage() {
         playerMoney += winnings;
+        /*let betReset =Number(betLabel.text);
+        betReset = 0;
+        betLabel.setText(betReset.toString());*/
         console.log(`You won: ${winnings}`);
         console.log(`Your credits: ${creditLabel.text}`);
         resetFruitTally();
@@ -251,9 +259,12 @@
         winnings = 0;
         console.log(`You lost`);
         console.log(`Your credits: ${creditLabel.text}`);
-        let a = Number(winningsLabel.text);
-        a = 0;
-        winningsLabel.setText(a.toString());
+        let winningReset = Number(winningsLabel.text);
+        winningReset = 0;
+        winningsLabel.setText(winningReset.toString());
+        /*let betReset =Number(betLabel.text);
+        betReset = 0;
+        betLabel.setText(betReset.toString());*/
         resetFruitTally();
     }
     /**this function is for determining winning point

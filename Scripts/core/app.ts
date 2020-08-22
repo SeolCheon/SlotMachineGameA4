@@ -9,6 +9,7 @@
     let bet10Button: UIObjects.Button;
     let bet100Button: UIObjects.Button;
     let betMaxButton: UIObjects.Button;
+    let betResetButton: UIObjects.Button;
 
     let jackPotLabel: UIObjects.Label;
     let creditLabel: UIObjects.Label;
@@ -29,6 +30,7 @@
     let sevens = 0;
     let blanks = 0;
 
+    //player winning status variable
     let winnings = 0;
     let playerBet = 0;
     let playerMoney = 1000;
@@ -51,11 +53,11 @@
         {id:"orange", src:"./Assets/images/orange.gif"},
         {id:"seven", src:"./Assets/images/seven.gif"},
         {id:"spinButton", src:"./Assets/images/spinButton.png"},
+        {id:"betResetButton", src:"./Assets/images/betResetButton.png"},
     ];   
-
+    /* Utility function to reset all fruit tallies */
     function resetFruitTally()
     {
-        // symbol tallies
         grapes = 0;
         bananas = 0;
         oranges = 0;
@@ -74,6 +76,7 @@
         jackpot = 5000;
         playerBet = 0;
     }
+
     /*Check to see if the player won the jackpot */
     function checkJackPot()
     {
@@ -199,6 +202,9 @@
         betMaxButton = new UIObjects.Button("betMaxButton", Config.Screen.CENTER_X + 67, Config.Screen.CENTER_Y + 176, true);
         stage.addChild(betMaxButton);
 
+        betResetButton = new UIObjects.Button("betResetButton", Config.Screen.CENTER_X +230, Config.Screen.CENTER_Y +176, true);
+        stage.addChild(betResetButton);
+
         // Labels
         jackPotLabel = new UIObjects.Label("5000", "20px", "Consolas", "#FF0000", Config.Screen.CENTER_X, Config.Screen.CENTER_Y - 175, true);
         stage.addChild(jackPotLabel);
@@ -238,20 +244,24 @@
                   
             if (playerMoney == 0)
             {
-                if (confirm("You ran out of Money! \nDo you want to play again?")) {
+                if (confirm("You ran out of Money! \nDo you want to play again?")) 
+                {
                     resetAll();
                     Main();
                 }
             }
-            else if (playerBet > playerMoney) {
+            else if (playerBet > playerMoney) 
+            {
                 alert("You don't have enough Money to place that bet.");
                 resetAll();
                 Main();
             }
-            else if (playerBet < 0) {
+            else if (playerBet < 0) 
+            {
                 alert("All bets must be a positive $ amount.");
             }
-            else if (playerBet ==0){
+            else if (playerBet ==0)
+            {
                 alert("You didn't bet any money! Put your money")
             }
             else if (playerBet <= playerMoney) {
@@ -293,6 +303,11 @@
     function showWinMessage()
     {
         playerMoney += winnings;
+
+        /*let betReset =Number(betLabel.text);
+        betReset = 0;
+        betLabel.setText(betReset.toString());*/
+
         console.log(`You won: ${winnings}`);
         console.log(`Your credits: ${creditLabel.text}`)
         resetFruitTally();
@@ -305,9 +320,15 @@
         winnings =0;
         console.log(`You lost`);
         console.log(`Your credits: ${creditLabel.text}`)
-        let a =Number(winningsLabel.text);
-        a=0;
-        winningsLabel.setText(a.toString());
+
+        let winningReset =Number(winningsLabel.text);
+        winningReset=0;
+        winningsLabel.setText(winningReset.toString());
+
+        /*let betReset =Number(betLabel.text);
+        betReset = 0;
+        betLabel.setText(betReset.toString());*/
+
         resetFruitTally();
     }
     
