@@ -35,7 +35,6 @@
     let jackpot = 5000;
 
 
-
     let manifest: Core.Item[] = [
         {id:"background", src:"./Assets/images/background.png"},
         {id:"banana", src:"./Assets/images/banana.gif"},
@@ -74,6 +73,20 @@
         winnings = 0;
         jackpot = 5000;
         playerBet = 0;
+    }
+    /*Check to see if the player won the jackpot */
+    function checkJackPot()
+    {
+        let jackPotTry = Math.floor(Math.random()*51 + 1);
+        let jackPotWin = Math.floor(Math.random()*51 + 1);
+        if(jackPotTry == jackPotWin)
+        {
+            alert("You won the $"+ jackpot +"Jackpot!!");
+            playerMoney += jackpot;
+            jackpot =1000;
+        }
+
+
     }
 
     // This function triggers first and "Preloads" all the assets
@@ -348,7 +361,8 @@
                 winnings = playerBet * 100;
                 winningsLabel.setText((Number(betLabel.text)*100).toString());
                 creditLabel.setText((Number(creditLabel.text)+Number(winningsLabel.text)).toString());      //add the winning point to credit
-                confirm(`Jackpot!!!\nYou got Jackpot point ${jackPotLabel.text} and winning point ${winningsLabel.text}}`)    //show this message on your screen
+                confirm(`Jackpot!!!\nYou got Jackpot point ${Number(jackPotLabel.text)} and winning point ${winningsLabel.text}}`)    //show this message on your screen
+                jackPotLabel.setText("00001000");
             }
             else if (grapes == 2) {
 
