@@ -305,11 +305,9 @@
     {
         playerMoney += winnings;
 
-        console.log(`You won: ${winnings} and Your left credits: ${creditLabel.text}`);
+        console.log(`You won: ${winnings} and Your left credits: ${creditLabel.text}`);             //show winning points and left credit on console
 
-        resetFruitTally();
-        
-        
+        resetFruitTally();                                                                          //reset fruit tally
         
     }
      /**
@@ -319,13 +317,13 @@
     {
         playerMoney -= playerBet;
         winnings =0;
-        console.log(`You lost ${betLabel.text} and Your left credits: ${creditLabel.text}`);
+        console.log(`You lost ${betLabel.text} and Your left credits: ${creditLabel.text}`);        //show lost credit and left credit on console
        
         let winningReset =Number(winningsLabel.text);
         winningReset=0;
-        winningsLabel.setText(winningReset.toString());
+        winningsLabel.setText(winningReset.toString());                                             //winningRabel is reseted
 
-        resetFruitTally();
+        resetFruitTally();                                                                          //fruit tally value is reseted
     }
     
     /**this function is for determining winning point

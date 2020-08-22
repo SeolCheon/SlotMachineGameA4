@@ -252,8 +252,8 @@
      */
     function showWinMessage() {
         playerMoney += winnings;
-        console.log(`You won: ${winnings} and Your left credits: ${creditLabel.text}`);
-        resetFruitTally();
+        console.log(`You won: ${winnings} and Your left credits: ${creditLabel.text}`); //show winning points and left credit on console
+        resetFruitTally(); //reset fruit tally
     }
     /**
     * This function is for showing losing message in console.
@@ -261,11 +261,11 @@
     function showLossMessage() {
         playerMoney -= playerBet;
         winnings = 0;
-        console.log(`You lost ${betLabel.text} and Your left credits: ${creditLabel.text}`);
+        console.log(`You lost ${betLabel.text} and Your left credits: ${creditLabel.text}`); //show lost credit and left credit on console
         let winningReset = Number(winningsLabel.text);
         winningReset = 0;
-        winningsLabel.setText(winningReset.toString());
-        resetFruitTally();
+        winningsLabel.setText(winningReset.toString()); //winningRabel is reseted
+        resetFruitTally(); //fruit tally value is reseted
     }
     /**this function is for determining winning point
      * depending on the number of shapes, winning point will be different

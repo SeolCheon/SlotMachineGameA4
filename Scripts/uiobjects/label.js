@@ -1,13 +1,3 @@
-
-/**
-  * File name : label.js
- * Author's name : Seol Cheon
- * Student Number : 301113120
- * Web site name : Slot Machine
- * File description : this code page is linked to html file.
-                   This function has class that allow users to make UI object label with properties
-                   and method that set an label's location, size, style, labelText and  mouse event.
- */
 var UIObjects;
 (function (UIObjects) {
     class Label extends createjs.Text {

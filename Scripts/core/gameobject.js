@@ -1,12 +1,3 @@
-/**
-  * File name : gameobject.js
- * Author's name : Seol Cheon
- * Student Number : 301113120
- * Web site name : Slot Machine
- * File description : this code page is linked to html file.
-                   This function has class that allow users to make game objects with properties
-                   and method that adjust an object's location and size.
- */
 var Core;
 (function (Core) {
     class GameObject extends createjs.Bitmap {

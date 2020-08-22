@@ -1,12 +1,3 @@
-/**
-  * File name : button.js
- * Author's name : Seol Cheon
- * Student Number : 301113120
- * Web site name : Slot Machine
- * File description : this code page is linked to html file.
-                   This function has class that allow users to make UI object button with properties
-                   and method that adjust an button's location and size, mouse event.
- */
 var UIObjects;
 (function (UIObjects) {
     class Button extends Core.GameObject {
