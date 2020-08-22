@@ -160,6 +160,42 @@
                     betLine[spin] = "seven";
                     sevens++;
                     break;
+
+                    /*
+                    case checkRange(outCome[spin], 1, 2): //1, 27) 41.5% probability
+                    betLine[spin] = "blank";
+                    blanks++;
+                    break;
+                case checkRange(outCome[spin], 3, 4): //28, 37) 15.4% probability
+                    betLine[spin] = "grapes";
+                    grapes++;
+                    break;
+                case checkRange(outCome[spin], 5, 6): //38, 46) 13.8% probability
+                    betLine[spin] = "banana";
+                    bananas++;
+                    break;
+                case checkRange(outCome[spin], 7, 8): //47, 54) 12.3% probability
+                    betLine[spin] = "orange";
+                    oranges++;
+                    break;
+                case checkRange(outCome[spin], 9, 10): //55, 59) 7.7% probability
+                    betLine[spin] = "cherry";
+                    cherries++;
+                    break;
+                case checkRange(outCome[spin], 11, 12): //60, 62) 4.6% probability
+                    betLine[spin] = "bar";
+                    bars++;
+                    break;
+                case checkRange(outCome[spin], 13, 14): //63, 64) 3.1% probability
+                    betLine[spin] = "bell";
+                    bells++;
+                    break;
+                case checkRange(outCome[spin], 15, 65): //65, 65) 1.5% probability
+                    betLine[spin] = "seven";
+                    sevens++;
+                    break;
+                    */
+     
             }
         }
         return betLine;                                 //return betLine array
@@ -362,7 +398,7 @@
             else if (sevens == 3) {
                 winnings = playerBet * 100;
                 winningsLabel.setText((Number(betLabel.text)*100).toString());                              //winning point is betamount *100
-                creditLabel.setText((Number(creditLabel.text)+Number(winningsLabel.text)+Number(jackPotLabel.text).toString()).toString());      //add the winning point to credit
+                creditLabel.setText(((Number(creditLabel.text)+Number(winningsLabel.text)+Number(jackPotLabel.text)).toString()).toString());      //add the winning point to credit
                 alert(`JackPot!\nYou got $${jackPotLabel.text}Jackpot and $${winningsLabel.text} winnings`);
                 jackPotLabel.setText("1000");
             }
