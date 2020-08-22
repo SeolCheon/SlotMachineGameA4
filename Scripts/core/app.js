@@ -60,7 +60,7 @@
         sevens = 0;
         blanks = 0;
     }
-    /* Utility function to reset the player stats */
+    /* Utility function to reset the player status */
     function resetAll() {
         playerMoney = 1000;
         winnings = 0;
@@ -253,24 +253,17 @@
     }
     function showWinMessage() {
         playerMoney += winnings;
-        /*let betReset =Number(betLabel.text);
-        betReset = 0;
-        betLabel.setText(betReset.toString());*/
-        console.log(`You won: ${winnings}`);
-        console.log(`Your credits: ${creditLabel.text}`);
+        console.log(`You won: ${winnings} and Your left credits: ${creditLabel.text}`);
         resetFruitTally();
+        checkJackPot();
     }
     function showLossMessage() {
         playerMoney -= playerBet;
         winnings = 0;
-        console.log(`You lost`);
-        console.log(`Your credits: ${creditLabel.text}`);
+        console.log(`You lost ${betLabel.text} and Your left credits: ${creditLabel.text}`);
         let winningReset = Number(winningsLabel.text);
         winningReset = 0;
         winningsLabel.setText(winningReset.toString());
-        /*let betReset =Number(betLabel.text);
-        betReset = 0;
-        betLabel.setText(betReset.toString());*/
         resetFruitTally();
     }
     /**this function is for determining winning point
@@ -310,10 +303,9 @@
             }
             else if (sevens == 3) {
                 winnings = playerBet * 100;
-                winningsLabel.setText((Number(betLabel.text) * 100).toString());
-                creditLabel.setText((Number(creditLabel.text) + Number(winningsLabel.text)).toString()); //add the winning point to credit
-                confirm(`Jackpot!!!\nYou got Jackpot point ${Number(jackPotLabel.text)} and winning point ${winningsLabel.text}}`); //show this message on your screen
-                jackPotLabel.setText("00001000");
+                winningsLabel.setText((Number(betLabel.text) * 100).toString()); //winning point is betamount *100
+                creditLabel.setText((Number(creditLabel.text) + Number(winningsLabel.text) + Number(jackPotLabel.text).toString()).toString()); //add the winning point to credit
+                jackPotLabel.setText("1000");
             }
             else if (grapes == 2) {
                 winnings = playerBet * 2;

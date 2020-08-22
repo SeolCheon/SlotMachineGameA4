@@ -53,7 +53,7 @@
         {id:"orange", src:"./Assets/images/orange.gif"},
         {id:"seven", src:"./Assets/images/seven.gif"},
         {id:"spinButton", src:"./Assets/images/spinButton.png"},
-        {id:"betResetButton", src:"./Assets/images/betResetButton.png"},
+        {id:"betResetButton", src:"./Assets/images/betResetButton.png"},        //betResetButton 
     ];   
     /* Utility function to reset all fruit tallies */
     function resetFruitTally()
@@ -68,7 +68,7 @@
         blanks = 0;
     }
     
-    /* Utility function to reset the player stats */
+    /* Utility function to reset the player status */
     function resetAll() 
     {
         playerMoney = 1000;
@@ -311,13 +311,10 @@
     {
         playerMoney += winnings;
 
-        /*let betReset =Number(betLabel.text);
-        betReset = 0;
-        betLabel.setText(betReset.toString());*/
+        console.log(`You won: ${winnings} and Your left credits: ${creditLabel.text}`);
 
-        console.log(`You won: ${winnings}`);
-        console.log(`Your credits: ${creditLabel.text}`)
         resetFruitTally();
+        checkJackPot();
         
         
     }
@@ -325,16 +322,11 @@
     {
         playerMoney -= playerBet;
         winnings =0;
-        console.log(`You lost`);
-        console.log(`Your credits: ${creditLabel.text}`)
-
+        console.log(`You lost ${betLabel.text} and Your left credits: ${creditLabel.text}`);
+       
         let winningReset =Number(winningsLabel.text);
         winningReset=0;
         winningsLabel.setText(winningReset.toString());
-
-        /*let betReset =Number(betLabel.text);
-        betReset = 0;
-        betLabel.setText(betReset.toString());*/
 
         resetFruitTally();
     }
@@ -353,47 +345,40 @@
                 
             }
             else if(bananas == 3) {
-                
                 winnings = playerBet * 20;
                 winningsLabel.setText((Number(betLabel.text)*20).toString());                               //winning point is betamount *20
                 creditLabel.setText((Number(creditLabel.text)+Number(winningsLabel.text)).toString());      //add the winning point to credit
                 
             }
             else if (oranges == 3) {
-               
                 winnings = playerBet * 30;
                 winningsLabel.setText((Number(betLabel.text)*30).toString());                               //winning point is betamount *30
                 creditLabel.setText((Number(creditLabel.text)+Number(winningsLabel.text)).toString());      //add the winning point to credit
                 
             }
             else if (cherries == 3) {
-                
                 winnings = playerBet * 40;
                 winningsLabel.setText((Number(betLabel.text)*40).toString());                               //winning point is betamount *40
                 creditLabel.setText((Number(creditLabel.text)+Number(winningsLabel.text)).toString());      //add the winning point to credit
                 
             }
             else if (bars == 3) {
-
                 winnings = playerBet * 50;
                 winningsLabel.setText((Number(betLabel.text)*50).toString());                               //winning point is betamount *50
                 creditLabel.setText((Number(creditLabel.text)+Number(winningsLabel.text)).toString());      //add the winning point to credit
                 
             }
             else if (bells == 3) {
-
                 winnings = playerBet * 75;
                 winningsLabel.setText((Number(betLabel.text)*75).toString());                               //winning point is betamount *75
                 creditLabel.setText((Number(creditLabel.text)+Number(winningsLabel.text)).toString());      //add the winning point to credit
                 
             }
             else if (sevens == 3) {
-                
                 winnings = playerBet * 100;
-                winningsLabel.setText((Number(betLabel.text)*100).toString());
-                creditLabel.setText((Number(creditLabel.text)+Number(winningsLabel.text)).toString());      //add the winning point to credit
-                confirm(`Jackpot!!!\nYou got Jackpot point ${Number(jackPotLabel.text)} and winning point ${winningsLabel.text}}`)    //show this message on your screen
-                jackPotLabel.setText("00001000");
+                winningsLabel.setText((Number(betLabel.text)*100).toString());                              //winning point is betamount *100
+                creditLabel.setText((Number(creditLabel.text)+Number(winningsLabel.text)+Number(jackPotLabel.text).toString()).toString());      //add the winning point to credit
+                jackPotLabel.setText("1000");
             }
             else if (grapes == 2) {
 
