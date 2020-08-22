@@ -25,6 +25,10 @@
     let bells = 0;
     let sevens = 0;
     let blanks = 0;
+    let winnings = 0;
+    let playerBet = 0;
+    let playerMoney = 1000;
+    let jackpot = 5000;
     let manifest = [
         { id: "background", src: "./Assets/images/background.png" },
         { id: "banana", src: "./Assets/images/banana.gif" },
@@ -42,6 +46,24 @@
         { id: "seven", src: "./Assets/images/seven.gif" },
         { id: "spinButton", src: "./Assets/images/spinButton.png" },
     ];
+    function resetFruitTally() {
+        // symbol tallies
+        grapes = 0;
+        bananas = 0;
+        oranges = 0;
+        cherries = 0;
+        bars = 0;
+        bells = 0;
+        sevens = 0;
+        blanks = 0;
+    }
+    /* Utility function to reset the player stats */
+    function resetAll() {
+        playerMoney = 1000;
+        winnings = 0;
+        jackpot = 5000;
+        playerBet = 0;
+    }
     // This function triggers first and "Preloads" all the assets
     function Preload() {
         assets = new createjs.LoadQueue();
@@ -135,13 +157,13 @@
         betMaxButton = new UIObjects.Button("betMaxButton", Config.Screen.CENTER_X + 67, Config.Screen.CENTER_Y + 176, true);
         stage.addChild(betMaxButton);
         // Labels
-        jackPotLabel = new UIObjects.Label("00005000", "20px", "Consolas", "#FF0000", Config.Screen.CENTER_X, Config.Screen.CENTER_Y - 175, true);
+        jackPotLabel = new UIObjects.Label("5000", "20px", "Consolas", "#FF0000", Config.Screen.CENTER_X, Config.Screen.CENTER_Y - 175, true);
         stage.addChild(jackPotLabel);
-        creditLabel = new UIObjects.Label("00001000", "20px", "Consolas", "#FF0000", Config.Screen.CENTER_X - 94, Config.Screen.CENTER_Y + 108, true);
+        creditLabel = new UIObjects.Label("1000", "20px", "Consolas", "#FF0000", Config.Screen.CENTER_X - 94, Config.Screen.CENTER_Y + 108, true);
         stage.addChild(creditLabel);
-        winningsLabel = new UIObjects.Label("00000000", "20px", "Consolas", "#FF0000", Config.Screen.CENTER_X + 94, Config.Screen.CENTER_Y + 108, true);
+        winningsLabel = new UIObjects.Label("0", "20px", "Consolas", "#FF0000", Config.Screen.CENTER_X + 94, Config.Screen.CENTER_Y + 108, true);
         stage.addChild(winningsLabel);
-        betLabel = new UIObjects.Label("0000", "20px", "Consolas", "#FF0000", Config.Screen.CENTER_X, Config.Screen.CENTER_Y + 108, true);
+        betLabel = new UIObjects.Label("0", "20px", "Consolas", "#FF0000", Config.Screen.CENTER_X, Config.Screen.CENTER_Y + 108, true);
         stage.addChild(betLabel);
         // Reel GameObjects
         leftReel = new Core.GameObject("bell", Config.Screen.CENTER_X - 79, Config.Screen.CENTER_Y - 12, true);
@@ -160,25 +182,32 @@
     function interfaceLogic() {
         //when you click spin button
         spinButton.on("click", () => {
-            if (creditLabel.text == "0") //if you don't have money(credit)
-             {
-                if (confirm(`You ran out of Money!\n Do you want to play again?`)) //show this confirm message
-                    Main(); //to reset everything (if you put Start, it occurs working error)
+            playerBet = Number(betLabel.text);
+            if (playerMoney == 0) {
+                if (confirm("You ran out of Money! \nDo you want to play again?")) {
+                    resetAll();
+                    Main();
+                }
             }
-            else if (Number(betLabel.text) > Number(creditLabel.text)) //if your money(credit) is less than your betting amount
-             {
-                alert(`You don't have enough Money to place that bet.`); //show this alert message
-                Main(); //to reset everything (if you put Start, it occurs error)
+            else if (playerBet > playerMoney) {
+                alert("You don't have enough Money to place that bet.");
+                resetAll();
+                Main();
             }
-            else if (Number(betLabel.text) <= Number(creditLabel.text)) //if you have enough money to play
-             {
+            else if (playerBet < 0) {
+                alert("All bets must be a positive $ amount.");
+            }
+            else if (playerBet <= playerMoney) {
                 // reel test
                 let reels = Reels();
                 // example of how to replace the images in the reels
                 leftReel.image = assets.getResult(reels[0]);
                 middleReel.image = assets.getResult(reels[1]);
                 rightReel.image = assets.getResult(reels[2]);
-                determinWinnings(); //implement determinWinnings function 
+                determineWinnings();
+            }
+            else {
+                alert("Please enter a valid bet amount");
             }
         });
         bet1Button.on("click", () => {
@@ -198,129 +227,113 @@
             betLabel.setText(Number(creditLabel.text).toString()); //change the bet amount by adding Max credit
         });
     }
+    function showWinMessage() {
+        playerMoney += winnings;
+        console.log(`You won: ${winnings}`);
+        console.log(`Your credits: ${creditLabel.text}`);
+        resetFruitTally();
+    }
+    function showLossMessage() {
+        playerMoney -= playerBet;
+        winnings = 0;
+        console.log(`You lost`);
+        console.log(`Your credits: ${creditLabel.text}`);
+        let a = Number(winningsLabel.text);
+        a = 0;
+        winningsLabel.setText(a.toString());
+        resetFruitTally();
+    }
     /**this function is for determining winning point
      * depending on the number of shapes, winning point will be different
      */
-    function determinWinnings() {
-        let reels = Reels(); //call Reels function and assign it reels
-        //set variables(the number of shapes on the betline)
-        let blankcount = 0;
-        let grapecount = 0;
-        let bananacount = 0;
-        let orangecount = 0;
-        let cherrycount = 0;
-        let barcount = 0;
-        let bellcount = 0;
-        let sevencount = 0;
-        //for one spin, whenever the shape appears, it will count the number of that shape
-        for (let i = 0; i < reels.length; i++) {
-            if (reels[i] == "blank")
-                blankcount++;
-            if (reels[i] == "grapes")
-                grapecount++;
-            if (reels[i] == "banana")
-                bananacount++;
-            if (reels[i] == "orange")
-                orangecount++;
-            if (reels[i] == "cherry")
-                cherrycount++;
-            if (reels[i] == "bar")
-                barcount++;
-            if (reels[i] == "bell")
-                bellcount++;
-            if (reels[i] == "seven")
-                sevencount++;
-        }
-        //this consolel message is for checking which shapes appears how many times on betline    
-        console.log(`blank, grape, banana, orange, cherry, bar, bell, seven\n ${blankcount},${grapecount},${bananacount},${orangecount},${cherrycount},${barcount},${bellcount},${sevencount}`);
-        //determining winning points and adding winning points to credit   
-        if (blankcount == 0) //if there's no blank-(win)    
-         {
-            if (grapecount == 3) //if there are 3 grapes on bet line    
-             {
+    function determineWinnings() {
+        if (blanks == 0) {
+            if (grapes == 3) {
+                winnings = playerBet * 10;
                 winningsLabel.setText((Number(betLabel.text) * 10).toString()); //winning point is betamount *10
                 creditLabel.setText((Number(creditLabel.text) + Number(winningsLabel.text)).toString()); //add the winning point to credit
             }
-            else if (bananacount == 3) //if there are 3 banana on bet line
-             {
+            else if (bananas == 3) {
+                winnings = playerBet * 20;
                 winningsLabel.setText((Number(betLabel.text) * 20).toString()); //winning point is betamount *20
                 creditLabel.setText((Number(creditLabel.text) + Number(winningsLabel.text)).toString()); //add the winning point to credit
             }
-            else if (orangecount == 3) //if there are 3 oranges on bet line
-             {
+            else if (oranges == 3) {
+                winnings = playerBet * 30;
                 winningsLabel.setText((Number(betLabel.text) * 30).toString()); //winning point is betamount *30
                 creditLabel.setText((Number(creditLabel.text) + Number(winningsLabel.text)).toString()); //add the winning point to credit
             }
-            else if (cherrycount == 3) //if there are 3 cherries on bet line
-             {
+            else if (cherries == 3) {
+                winnings = playerBet * 40;
                 winningsLabel.setText((Number(betLabel.text) * 40).toString()); //winning point is betamount *40
                 creditLabel.setText((Number(creditLabel.text) + Number(winningsLabel.text)).toString()); //add the winning point to credit
             }
-            else if (barcount == 3) //if there are 3 bars on bet line
-             {
+            else if (bars == 3) {
+                winnings = playerBet * 50;
                 winningsLabel.setText((Number(betLabel.text) * 50).toString()); //winning point is betamount *50
                 creditLabel.setText((Number(creditLabel.text) + Number(winningsLabel.text)).toString()); //add the winning point to credit
             }
-            else if (bellcount == 3) //if there are 3 bells on bet line
-             {
+            else if (bells == 3) {
+                winnings = playerBet * 75;
                 winningsLabel.setText((Number(betLabel.text) * 75).toString()); //winning point is betamount *75
                 creditLabel.setText((Number(creditLabel.text) + Number(winningsLabel.text)).toString()); //add the winning point to credit
             }
-            else if (sevencount == 3) //if there are 3 sevens(jackpot) on bet line
-             {
-                winningsLabel.setText((Number(betLabel.text) * 100).toString()); //winning point is betamount *100
+            else if (sevens == 3) {
+                winnings = playerBet * 100;
+                winningsLabel.setText((Number(betLabel.text) * 100).toString());
                 creditLabel.setText((Number(creditLabel.text) + Number(winningsLabel.text)).toString()); //add the winning point to credit
                 confirm(`Jackpot!!!\nYou got Jackpot point ${jackPotLabel.text} and winning point ${winningsLabel.text}}`); //show this message on your screen
             }
-            else if (grapecount == 2) //if there are 2 grapes on bet line
-             {
+            else if (grapes == 2) {
+                winnings = playerBet * 2;
                 winningsLabel.setText((Number(betLabel.text) * 2).toString()); //winning point is betamount *2
                 creditLabel.setText((Number(creditLabel.text) + Number(winningsLabel.text)).toString()); //add the winning point to credit
             }
-            else if (bananacount == 2) //if there are 2 bananas on bet line
-             {
+            else if (bananas == 2) {
+                winnings = playerBet * 2;
                 winningsLabel.setText((Number(betLabel.text) * 2).toString()); //winning point is betamount *2
                 creditLabel.setText((Number(creditLabel.text) + Number(winningsLabel.text)).toString()); //add the winning point to credit
             }
-            else if (orangecount == 2) //if there are 2 oranges on bet line
-             {
+            else if (oranges == 2) {
+                winnings = playerBet * 3;
                 winningsLabel.setText((Number(betLabel.text) * 3).toString()); //winning point is betamount *3
                 creditLabel.setText((Number(creditLabel.text) + Number(winningsLabel.text)).toString()); //add the winning point to credit
             }
-            else if (cherrycount == 2) //if there are 2 cherries on bet line
-             {
+            else if (cherries == 2) {
+                winnings = playerBet * 4;
                 winningsLabel.setText((Number(betLabel.text) * 4).toString()); //winning point is betamount *4
                 creditLabel.setText((Number(creditLabel.text) + Number(winningsLabel.text)).toString()); //add the winning point to credit
             }
-            else if (barcount == 2) //if there are 2 bars on bet line
-             {
+            else if (bars == 2) {
+                winnings = playerBet * 5;
                 winningsLabel.setText((Number(betLabel.text) * 5).toString()); //winning point is betamount *5
                 creditLabel.setText((Number(creditLabel.text) + Number(winningsLabel.text)).toString()); //add the winning point to credit
             }
-            else if (bellcount == 2) //if there are 2 bells on bet line
-             {
+            else if (bells == 2) {
+                winnings = playerBet * 10;
                 winningsLabel.setText((Number(betLabel.text) * 10).toString()); //winning point is betamount *10
                 creditLabel.setText((Number(creditLabel.text) + Number(winningsLabel.text)).toString()); //add the winning point to credit
             }
-            else if (sevencount == 2) //if there are 2 sevens on bet line
-             {
+            else if (sevens == 2) {
+                winnings = playerBet * 20;
                 winningsLabel.setText((Number(betLabel.text) * 20).toString()); //winning point is betamount *20
                 creditLabel.setText((Number(creditLabel.text) + Number(winningsLabel.text)).toString()); //add the winning point to credit
             }
-            else if (sevencount == 1) //if there are 1 seven on bet line
-             {
+            else if (sevens == 1) {
+                winnings = playerBet * 5;
                 winningsLabel.setText((Number(betLabel.text) * 5).toString()); //winning point is betamount *5
                 creditLabel.setText((Number(creditLabel.text) + Number(winningsLabel.text)).toString()); //add the winning point to credit
             }
-            else //left cases when you don't have blank on you bet line
-             {
+            else {
+                winnings = playerBet * 1;
                 winningsLabel.setText((Number(betLabel.text) * 1).toString()); //winning point is betamount *1
                 creditLabel.setText((Number(creditLabel.text) + Number(winningsLabel.text)).toString()); //add the winning point to credit
             }
+            showWinMessage();
         }
-        else //if you lose game(=if there's blank more than one)
-         {
+        else {
             creditLabel.setText((Number(creditLabel.text) - Number(betLabel.text)).toString()); //your credit will deducted by bet amount
+            showLossMessage();
         }
     }
     // app logic goes here
