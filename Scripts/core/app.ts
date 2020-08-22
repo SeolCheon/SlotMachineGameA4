@@ -251,6 +251,9 @@
             else if (playerBet < 0) {
                 alert("All bets must be a positive $ amount.");
             }
+            else if (playerBet ==0){
+                alert("You didn't bet any money! Put your money")
+            }
             else if (playerBet <= playerMoney) {
                 // reel test
                 let reels = Reels();
